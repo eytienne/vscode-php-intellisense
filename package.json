@@ -28,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/felixfbecker/vscode-php-intellisense.git"
+    "url": "https://github.com/eytienne/vscode-php-intellisense.git"
   },
   "bugs": {
-    "url": "https://github.com/felixfbecker/php-language-server/issues"
+    "url": "https://github.com/eytienne/php-language-server/issues"
   },
   "activationEvents": [
     "onLanguage:php",
