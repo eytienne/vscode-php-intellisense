@@ -39,7 +39,6 @@
     "no-empty": true,
     "no-empty-interface": false,
     "no-eval": true,
-    "no-floating-promises": [true],
     "no-for-in-array": true,
     "no-inferrable-types": [true],
     "no-inferred-empty-object-type": true,
@@ -78,7 +77,6 @@
     "prefer-template": [false, "allow-single-concat"],
     "return-undefined": true,
     "triple-equals": [true],
-    "typedef": [true, "call-signature"],
     "unified-signatures": true,
     "variable-name": [true, "ban-keywords"]
   }

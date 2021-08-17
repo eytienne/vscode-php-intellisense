@@ -60,7 +60,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         version = version.replace(/(\d+.\d+.\d+)/, '$1-')
     }
     if (semver.lt(version, composerJson.config.platform.php)) {
-        vscode.window.showErrorMessage('The language server needs at least PHP 7.1 installed. Version found: ' + version)
+        vscode.window.showErrorMessage(
+            'The language server needs at least PHP 7.1 installed. Version found: ' + version
+        )
         return
     }
 
