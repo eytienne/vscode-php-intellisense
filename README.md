@@ -66,6 +66,7 @@ Please use a dedicated extension like [PHP CS Fixer](https://marketplace.visuals
 Clone whole repository and in root directory execute:
 
 ```bash
+# For working on the language server, put a `LOCAL_LINK` variable into `.env.local` pointing to your local clone that will be symlinked into composer hooks.
 composer install
 npm install
 npm run build
@@ -73,6 +74,5 @@ code .
 ```
 
 The last command will open the folder in VS Code. Hit `F5` to launch an Extension Development Host with the extension.
-For working on the language server, the easiest way is to replace the language server installation from composer in `vendor/felixfbecker/language-server` with a symlink to your local clone.
 
 **For guidance on how to work on the language server, please see the [language server repository](https://github.com/eytienne/php-language-server).**
