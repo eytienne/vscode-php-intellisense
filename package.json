@@ -105,19 +105,18 @@
       "type": "object",
       "title": "PHP IntelliSense",
       "properties": {
-        "php.memoryLimit": {
+        "php-intellisense.memoryLimit": {
           "type": "string",
           "default": "4095M",
           "description": "The memory limit of the php language server. [Number][K|M|G]. Use '-1' to allow unlimited use of the RAM (default is 4G).",
           "pattern": "^\\d+[KMG]?$"
         },
-        "php.executablePath": {
+        "php-intellisense.xdebug": {
           "type": [
-            "string",
-            "null"
+            "boolean"
           ],
-          "default": null,
-          "description": "The path to a PHP 7+ executable."
+          "default": false,
+          "description": "(For contributors) Enable XDebug on the language server"
         }
       }
     }

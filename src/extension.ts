@@ -9,11 +9,9 @@ import { LanguageClient, LanguageClientOptions, RevealOutputChannelOn, StreamInf
 const composerJson = require('../composer.json');
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-    const conf = vscode.workspace.getConfiguration('php');
-    const executablePath =
-        conf.get<string>('executablePath') ||
-        conf.get<string>('validate.executablePath') ||
-        (process.platform === 'win32' ? 'php.exe' : 'php');
+    const conf = vscode.workspace.getConfiguration('php-intellisense');
+    const executablePath = vscode.workspace.getConfiguration('php').get<string>('validate.executablePath')
+        || (process.platform === 'win32' ? 'php.exe' : 'php');
 
     const memoryLimit = conf.get<string>('memoryLimit') || '4095M';
 
@@ -85,11 +83,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
                 // The server is implemented in PHP
                 const childProcess = spawn(executablePath, [
                     context.asAbsolutePath(
-                        path.join('vendor', 'felixfbecker', 'language-server', 'bin', 'php-language-server.php')
+                        path.join('vendor', 'bin', 'php-language-server.php')
                     ),
                     '--tcp=127.0.0.1:' + server.address().port,
                     '--memory-limit=' + memoryLimit,
-                ]);
+                ], {
+                    env: conf.get<boolean>('xdebug') ? {
+                        'PHPLS_ALLOW_XDEBUG': 1,
+                        'XDEBUG_SESSION': 1,
+                    } : undefined
+                });
                 childProcess.stderr.on('data', (chunk: Buffer) => {
                     const str = chunk.toString();
                     console.log('PHP Language Server:', str);
