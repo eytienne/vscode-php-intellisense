@@ -111,10 +111,16 @@
           "description": "The memory limit of the php language server. [Number][K|M|G]. Use '-1' to allow unlimited use of the RAM (default is 4G).",
           "pattern": "^\\d+[KMG]?$"
         },
+        "php-intellisense.exclude": {
+          "type": "object",
+          "description": "Overrides `file.excludes` for globs to exclude from indexing",
+          "additionalProperties": {
+            "type": "boolean",
+            "description": "The glob pattern to match file paths against. Set to true or false to enable or disable the pattern."
+          }
+        },
         "php-intellisense.xdebug": {
-          "type": [
-            "boolean"
-          ],
+          "type": "boolean",
           "default": false,
           "description": "(For contributors) Enable XDebug on the language server"
         }
@@ -122,3 +128,4 @@
     }
   }
 }
+

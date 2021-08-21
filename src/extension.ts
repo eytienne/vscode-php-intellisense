@@ -6,7 +6,7 @@ import * as semver from 'semver';
 import * as url from 'url';
 import * as vscode from 'vscode';
 import { LanguageClient, LanguageClientOptions, RevealOutputChannelOn, StreamInfo } from 'vscode-languageclient';
-const composerJson = require('../composer.json');
+import composerJson = require('../composer.json');
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const conf = vscode.workspace.getConfiguration('php-intellisense');
@@ -113,10 +113,21 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
             });
         });
 
+
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
         // Register the server for php documents
         documentSelector: [{ scheme: 'file', language: 'php' }, { scheme: 'untitled', language: 'php' }],
+        initializationOptions: {
+            exclude: Object.entries(
+                Object.assign(
+                    // as of @types/vscode@1.59.0, get<T>() is in fact returning Proxy<T>
+                    // https://stackoverflow.com/questions/51096547/how-to-get-the-target-of-a-javascript-proxy
+                    Object.assign({}, vscode.workspace.getConfiguration('files').get<Record<string, boolean>>('exclude')),
+                    Object.assign({}, conf.get<Record<string, boolean>>('exclude'))
+                )
+            ).filter(([_key, value]) => value).map(([key, _value]) => key),
+        } as InitializationOptions,
         revealOutputChannelOn: RevealOutputChannelOn.Never,
         uriConverters: {
             // VS Code by default %-encodes even the colon after the drive letter
@@ -139,4 +150,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     // Push the disposable to the context's subscriptions so that the
     // client can be deactivated on extension deactivation
     context.subscriptions.push(disposable);
+}
+
+interface InitializationOptions {
+    /**
+     * Glob patterns to exclude from indexing.
+     */
+    exclude: string[];
 }
