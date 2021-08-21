@@ -7,11 +7,24 @@
         }
     },
     "require": {
-        "felixfbecker/language-server": "5.4.6"
+        "felixfbecker/language-server": "v5.4.6",
+        "symfony/dotenv": "^3.4"
     },
     "scripts": {
         "parse-stubs": "LanguageServer\\ComposerScripts::parseStubs",
-        "post-update-cmd": "@parse-stubs",
-        "post-install-cmd": "@parse-stubs"
+        "setup-dev": "VscodePHPIntellisense\\ComposerScripts::setupDev",
+        "post-update-cmd": [
+            "@parse-stubs",
+            "@setup-dev"
+        ],
+        "post-install-cmd": [
+            "@parse-stubs",
+            "@setup-dev"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "VscodePHPIntellisense\\": "src/"
+        }
     }
 }
